@@ -29,5 +29,6 @@
   "risk": "medium",
   "approval_status": "owner_authorized_implementation",
   "canonical_change_record": "36OS-database/data/36os/change-records/CR-20261124-M36-001.json",
-  "note": "This governance record and README trace were committed atomically. implementation_files lists the component files delivered in preceding commits. No runtime database integration or production deployment is included."
+  "note": "This governance record and README trace were committed atomically. implementation_files lists the component files delivered in preceding commits. No runtime database integration or production deployment is included.",
+  "governance_revision": 2
 }
