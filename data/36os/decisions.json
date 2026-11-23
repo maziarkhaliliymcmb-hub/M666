@@ -1,0 +1,179 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "36OS",
+  "decisions": [
+    {
+      "id": "D-001",
+      "title": "تعریف CIE به‌عنوان موتور هوش جمعی",
+      "status": "accepted_direction",
+      "date": "2026-11-20",
+      "decision": "ساخت زیرساختی برای همکاری هوش‌های مستقل و ایجاد هوش برآمده، نه صرفاً یک چت‌بات منفرد.",
+      "rationale": "توزیع توانایی‌ها، همکاری، حافظه مشترک و ارکستراسیون.",
+      "source": "آفرینش هوش جمعی",
+      "confidence": "high"
+    },
+    {
+      "id": "D-002",
+      "title": "پنج لایه معماری پایه",
+      "status": "accepted_direction",
+      "date": "2026-11-20",
+      "decision": "معماری شامل زیرساخت، هوشمندی توزیع‌شده، حافظه/دانش مشترک، ارکستراسیون و خودمختاری تطبیقی است.",
+      "layers": [
+        "infrastructure",
+        "distributed_intelligence",
+        "shared_memory_knowledge",
+        "orchestration",
+        "adaptive_autonomy"
+      ],
+      "source": "آفرینش هوش جمعی",
+      "confidence": "high"
+    },
+    {
+      "id": "D-003",
+      "title": "حاکمیت انسانی و Adaptive Autonomy Level B",
+      "status": "approved_architecture",
+      "date": "2026-11-20",
+      "decision": "سیستم می‌تواند عملیات از پیش مجاز را بدون حضور زنده مالک انجام دهد؛ اختیار مالک، افزایش سطح دسترسی و اقدامات پرریسک قابل واگذاری نیست.",
+      "constraints": [
+        "default_deny",
+        "least_privilege",
+        "separation_of_duties",
+        "human_approval_for_high_risk",
+        "append_only_audit",
+        "rollback"
+      ],
+      "source": "docs/adaptive-autonomy-policy.md",
+      "confidence": "high"
+    },
+    {
+      "id": "D-004",
+      "title": "Notion به‌عنوان control plane مستندات",
+      "status": "accepted_architecture",
+      "date": "2026-11-20",
+      "decision": "Notion محل کنترل و حافظه مستندات پروژه باشد و مخزن GitHub میزبان موتور اجرایی و کد باشد.",
+      "source": "README.md فعلی مخزن",
+      "confidence": "high"
+    },
+    {
+      "id": "D-005",
+      "title": "Activepieces Cloud به‌عنوان MCP gateway",
+      "status": "accepted_architecture_not_live",
+      "date": "2026-11-21",
+      "decision": "Activepieces برای gateway پروژه‌محور MCP و اجرای workflow استفاده شود؛ CIE مرجع هویت، مجوز، شواهد، audit و تأیید انسانی باقی بماند.",
+      "constraints": [
+        "یک پروژه/credential مجزا برای هر مدل تأییدشده",
+        "عدم استفاده از credential مشترک بین مدل‌ها",
+        "فقط ابزارهای محدود و purpose-built",
+        "عدم ارائه arbitrary HTTP tool"
+      ],
+      "source": "docs/activepieces-mcp.md",
+      "confidence": "high"
+    },
+    {
+      "id": "D-006",
+      "title": "شروع اتصال Activepieces با identity check فقط خواندنی",
+      "status": "planned_not_verified",
+      "date": "2026-11-21",
+      "decision": "اولین workflow آزمایشی engine_identity_check باشد؛ submit_analysis تا آماده شدن API و audit پایدار مسدود بماند.",
+      "source": "docs/activepieces-mcp.md",
+      "confidence": "high"
+    },
+    {
+      "id": "D-007",
+      "title": "حذف/تعویق شاخه Qwen از کد اجرایی",
+      "status": "accepted_defer",
+      "date": "2026-11-21",
+      "decision": "شاخه اختصاصی Qwen فعلاً در کد نگهداری نشود؛ مدیریت ورودی و خروجی در فاز فعلی بر عهده ChatGPT باشد تا بعداً مدل مجزا انتخاب شود.",
+      "source": "گفتگوی Set Up Vercel و آفرینش هوش جمعی",
+      "confidence": "high"
+    },
+    {
+      "id": "D-008",
+      "title": "مدل رایگان/چینی یا محلی برای آینده",
+      "status": "open_research",
+      "date": "2026-11-21",
+      "decision": "مدل آینده باید بدون هزینه ثابت باشد: سهمیه رایگان یا اجرای محلی؛ مدل نهایی هنوز انتخاب نشده است.",
+      "source": "آفرینش هوش جمعی",
+      "confidence": "high"
+    },
+    {
+      "id": "D-009",
+      "title": "زیرساخت ابری موقت و انتقال به سخت‌افزار مالک",
+      "status": "accepted_direction",
+      "date": "2026-11-20",
+      "decision": "در دوره نبود سخت‌افزار، توسعه با سرویس ابری ادامه یابد؛ معماری نهایی ترکیبی و قابل انتقال به سخت‌افزار محلی باشد.",
+      "source": "گفتگوهای CIE و Vercel",
+      "confidence": "high"
+    },
+    {
+      "id": "D-010",
+      "title": "سخت‌افزار پیشنهادی node نخست",
+      "status": "proposal_not_approved",
+      "date": "2026-11-20",
+      "decision": "پیشنهاد اولیه: Ryzen 7/Core i7، مادربرد قابل ارتقا AM5-equivalent، رم 64GB DDR5، NVMe یک ترابایت، بدون GPU در شروع، شبکه گیگابیتی؛ Proxmox VE به‌عنوان گزینه مجازی‌سازی.",
+      "unresolved": [
+        "بودجه",
+        "فرم‌فاکتور",
+        "انتخاب CPU دقیق",
+        "GPU و زمان خرید"
+      ],
+      "source": "پیشنهاد معماری در گفتگو",
+      "confidence": "medium"
+    },
+    {
+      "id": "D-011",
+      "title": "ربات تلگرام به‌عنوان رابط ورودی/خروجی",
+      "status": "accepted_direction",
+      "date": "2026-11-21",
+      "decision": "اکوسیستم باید از طریق ربات تلگرام ورودی دریافت و خروجی ارسال کند؛ مدل اختصاصی واسط تا بعداً انتخاب شود.",
+      "source": "گفتگوهای Set Up Vercel",
+      "confidence": "high"
+    },
+    {
+      "id": "D-012",
+      "title": "Manus به‌عنوان گزینه بررسی",
+      "status": "research_only",
+      "date": "2026-11-21",
+      "decision": "Manus مطرح و پرسیده شد؛ تصمیمی برای استفاده یا اتصال آن ثبت نشده است.",
+      "source": "گفتگوی Set Up Vercel",
+      "confidence": "high"
+    },
+    {
+      "id": "D-013",
+      "title": "Database-First Development و Universal Change Traceability",
+      "status": "approved_architecture",
+      "date": "2026-11-22",
+      "decision": "تمام توسعه‌ها و تغییرات در هر لایه باید از داده‌ها، اهداف، تصمیمات و قراردادهای مرجع 36OS پیروی کنند. هر تغییر باید قبل از ادغام دارای Change Record ساختاریافته شامل اهداف، تصمیمات، فایل‌ها، عامل تغییر، ریسک و خلاصه باشد و در CI اعتبارسنجی شود. تغییرات عملیاتی نیز در دیتابیس و Audit Log ثبت شوند.",
+      "constraints": [
+        "database_before_code",
+        "schema_before_integration",
+        "change_record_required",
+        "audit_every_mutation",
+        "append_only_audit",
+        "human_approval_for_privileged_or_high_risk_changes",
+        "no_secrets_in_git"
+      ],
+      "source": "گفتگوی 36OS — دستور مالک در 2026-11-22",
+      "confidence": "high"
+    },
+    {
+      "id": "D-014",
+      "title": "36OS and CIE as independently deployed services",
+      "status": "approved_architecture",
+      "date": "2026-11-22",
+      "decision": "36OS is the authoritative Knowledge & Governance service and owns the canonical runtime PostgreSQL connection. CIE is a separate Intelligence & Orchestration service and consumes 36OS capabilities through authenticated, scope-limited APIs; CIE must not maintain a competing canonical knowledge database or connect directly to the 36OS database.",
+      "rationale": "Preserve a single source of truth and a clear security boundary while allowing independent deployment, scaling, and later migration of either service.",
+      "constraints": [
+        "36OS owns canonical goals, decisions, change records, and audit data",
+        "CIE accesses 36OS only through authenticated APIs",
+        "separate deployment and service identities",
+        "least-privilege scopes and default-deny model access",
+        "no shared bearer credentials",
+        "human approval for privileged or high-risk operations",
+        "no production release before preview verification"
+      ],
+      "source": "Owner direction to implement the two-service architecture on 2026-11-22",
+      "confidence": "high"
+    }
+  ]
+}

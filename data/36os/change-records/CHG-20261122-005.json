@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261122-005",
+  "date": "2026-11-22",
+  "actor": {
+    "id": "project-owner-and-assistant",
+    "type": "human_authorized_request_with_ai_implementation"
+  },
+  "summary": "Fix canonical Change Record seed handling for both string and object notes fields so database initialization succeeds.",
+  "rationale": "The initial Change Record records use notes as a string, while the seed loader expected a mapping; normalize both representations without losing source information.",
+  "goal_ids": [
+    "G-002",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-013"
+  ],
+  "risk": "medium",
+  "approval_status": "owner_authorized_for_this_implementation",
+  "touched_files": [
+    "app/database.py"
+  ],
+  "verification": [
+    "GitHub Actions test rerun pending"
+  ],
+  "notes": "Corrective implementation change based on observed CI failure."
+}

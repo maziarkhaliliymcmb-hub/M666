@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261122-003",
+  "date": "2026-11-22",
+  "actor": {
+    "id": "project-owner-and-assistant",
+    "type": "human_authorized_request_with_ai_implementation"
+  },
+  "summary": "Correct shared authentication dependency injection for knowledge endpoints and avoid consuming request bodies in audit middleware.",
+  "rationale": "Ensure all knowledge endpoints enforce bearer identity and scopes correctly, and preserve request bodies for FastAPI handlers while retaining mutation audit metadata.",
+  "goal_ids": [
+    "G-003",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-003",
+    "D-013"
+  ],
+  "risk": "high",
+  "approval_status": "owner_authorized_for_this_implementation",
+  "touched_files": [
+    "app/main.py",
+    "app/knowledge.py",
+    "app/security/dependencies.py"
+  ],
+  "verification": [
+    "Static review of dependency wiring; CI test execution pending"
+  ],
+  "notes": "Audit events record request metadata and outcomes; request body contents are intentionally not copied to audit logs."
+}

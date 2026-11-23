@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "integrations": [
+    {
+      "id": "INT-GITHUB",
+      "name": "GitHub",
+      "role": "source_code_and_versioned_project_data",
+      "status": "connected",
+      "repository": "maziarkhaliliymcmb-hub/36OS-database",
+      "branch": "main",
+      "notes": "مخزن خصوصی؛ دسترسی admin در اتصال فعلی تأیید شده."
+    },
+    {
+      "id": "INT-NOTION",
+      "name": "Notion",
+      "role": "documented_control_plane",
+      "status": "architecture_decision",
+      "notes": "طبق README مخزن، Notion محل کنترل و حافظه مستندات است؛ وضعیت اتصال و همگام‌سازی در این عملیات بررسی نشده."
+    },
+    {
+      "id": "INT-ACTIVEPIECES",
+      "name": "Activepieces Cloud",
+      "role": "project_scoped_mcp_gateway_and_workflow_runner",
+      "status": "planned_not_verified",
+      "security_requirements": [
+        "credential مستقل برای هر مدل",
+        "هویت caller از credential احراز شود نه ورودی tool",
+        "ابزارهای MCP محدود و purpose-built",
+        "default deny",
+        "ثبت audit"
+      ],
+      "first_workflow": "engine_identity_check"
+    },
+    {
+      "id": "INT-TELEGRAM",
+      "name": "Telegram Bot",
+      "role": "human_interface_input_output",
+      "status": "planned",
+      "notes": "نیازمندی پذیرفته‌شده؛ bot token، webhook و اتصال عملیاتی در این سند ثبت نشده."
+    },
+    {
+      "id": "INT-VERCEL",
+      "name": "Vercel",
+      "role": "cloud_runtime_candidate",
+      "status": "development_context_not_verified",
+      "notes": "برای توسعه/استقرار مطرح شده؛ deployment تولیدی و endpoint عمومی تأیید نشده."
+    },
+    {
+      "id": "INT-CODESPACES",
+      "name": "GitHub Codespaces",
+      "role": "development_environment",
+      "status": "configured_not_runtime_verified",
+      "notes": "Dev Container و اجرای محلی مستند شده؛ اجرای زنده و تست runtime در این عملیات تأیید نشده."
+    },
+    {
+      "id": "INT-LOCAL-MODEL",
+      "name": "Local/open-weight model",
+      "role": "future_agent_runtime",
+      "status": "deferred",
+      "notes": "مدل و سخت‌افزار نهایی انتخاب نشده‌اند؛ شاخه Qwen در فاز فعلی کنار گذاشته شده."
+    }
+  ]
+}

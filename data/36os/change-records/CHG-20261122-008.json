@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261122-008",
+  "date": "2026-11-22",
+  "actor": {
+    "id": "project-owner-and-assistant",
+    "type": "human_authorized_request_with_ai_implementation"
+  },
+  "summary": "Record the approved separation of 36OS Knowledge & Governance and CIE Intelligence & Orchestration as independently deployed services.",
+  "rationale": "Establish one canonical knowledge authority and a least-privilege API boundary before implementing the 36OS Vercel runtime.",
+  "goal_ids": [
+    "G-002",
+    "G-003",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-013",
+    "D-014"
+  ],
+  "risk": "medium",
+  "approval_status": "owner_authorized_for_this_implementation",
+  "touched_files": [
+    "data/36os/decisions.json"
+  ],
+  "verification": [
+    "Canonical decision record updated before implementation"
+  ]
+}

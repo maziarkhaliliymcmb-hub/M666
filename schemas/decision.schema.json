@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "36OS Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "status",
+    "decision"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^D-[0-9]{3,}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "accepted_direction",
+        "accepted_architecture",
+        "approved_architecture",
+        "planned_not_verified",
+        "accepted_defer",
+        "open_research",
+        "research_only",
+        "rejected",
+        "superseded"
+      ]
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "decision": {
+      "type": "string",
+      "minLength": 5
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "supersedes": {
+      "type": "string"
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

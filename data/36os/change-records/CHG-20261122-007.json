@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261122-007",
+  "date": "2026-11-22",
+  "actor": {
+    "id": "project-owner-and-assistant",
+    "type": "human_authorized_request_with_ai_implementation"
+  },
+  "summary": "Add missing test imports for append-only audit ledger verification.",
+  "rationale": "The new immutability test references SQLAlchemy session/model objects and pytest assertions; ensure the test module imports those symbols.",
+  "goal_ids": [
+    "G-002",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-013"
+  ],
+  "risk": "low",
+  "approval_status": "owner_authorized_for_this_implementation",
+  "touched_files": [
+    "tests/test_knowledge_api.py"
+  ],
+  "verification": [
+    "GitHub Actions test rerun pending"
+  ]
+}

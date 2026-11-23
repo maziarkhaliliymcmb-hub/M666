@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261122-004",
+  "date": "2026-11-22",
+  "actor": {
+    "id": "project-owner-and-assistant",
+    "type": "human_authorized_request_with_ai_implementation"
+  },
+  "summary": "Ignore local runtime database artifacts, add mutation-audit integration coverage, and make runtime change records append-only in PostgreSQL migration.",
+  "rationale": "Prevent accidental database file commits, verify audit capture on write endpoints, and preserve the immutable change history invariant.",
+  "goal_ids": [
+    "G-002",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-003",
+    "D-013"
+  ],
+  "risk": "medium",
+  "approval_status": "owner_authorized_for_this_implementation",
+  "touched_files": [
+    ".gitignore",
+    "tests/test_knowledge_api.py",
+    "db/migrations/002_change_traceability.sql",
+    "docs/database-first-governance.md"
+  ],
+  "verification": [
+    "Static review; CI test execution pending"
+  ],
+  "notes": "The audit middleware currently writes after the route completes; transactional coupling remains a production hardening item."
+}

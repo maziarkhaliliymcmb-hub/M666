@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261122-009",
+  "date": "2026-11-22",
+  "actor": {
+    "id": "project-owner-and-assistant",
+    "type": "human_authorized_request_with_ai_implementation"
+  },
+  "summary": "Prepare the 36OS FastAPI service for Vercel and Neon by normalizing PostgreSQL URLs, correcting append-only trigger SQL, adding a live database health check, and documenting the service boundary.",
+  "rationale": "The deployment audit identified a PostgreSQL driver URL mismatch and invalid dollar quoting in the startup trigger function. The service must prove a real database round-trip before CIE integration.",
+  "goal_ids": [
+    "G-002",
+    "G-003",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-013",
+    "D-014"
+  ],
+  "risk": "high",
+  "approval_status": "owner_authorized_for_this_implementation",
+  "touched_files": [
+    "app/database.py",
+    "app/main.py",
+    "tests/test_knowledge_api.py",
+    "vercel.json",
+    "docs/36os-vercel-deployment.md"
+  ],
+  "verification": [
+    "Static source review completed",
+    "GitHub Actions test and governance checks pending",
+    "Preview deployment and Neon connectivity check pending"
+  ]
+}

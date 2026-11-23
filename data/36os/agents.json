@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "agents": [
+    {
+      "id": "AGENT-ORCHESTRATOR",
+      "name": "CIE Core Orchestrator",
+      "role": "task_routing_state_coordination_policy_gate",
+      "status": "planned",
+      "identity_required": true,
+      "default_scopes": []
+    },
+    {
+      "id": "AGENT-TELEGRAM-IO",
+      "name": "Telegram I/O Agent",
+      "role": "receive_normalize_route_and_reply",
+      "status": "planned",
+      "identity_required": true,
+      "default_scopes": [
+        "messages:receive",
+        "messages:reply"
+      ]
+    },
+    {
+      "id": "AGENT-INTELLIGENCE",
+      "name": "CIE Intelligence Agent",
+      "role": "analysis_research_synthesis_and_evaluation",
+      "status": "design_started",
+      "identity_required": true,
+      "default_scopes": [
+        "knowledge:read",
+        "analysis:submit"
+      ]
+    },
+    {
+      "id": "AGENT-MEMORY",
+      "name": "Shared Memory Agent",
+      "role": "knowledge_retrieval_and_memory_maintenance",
+      "status": "planned",
+      "identity_required": true,
+      "default_scopes": [
+        "knowledge:read",
+        "knowledge:propose"
+      ]
+    },
+    {
+      "id": "AGENT-AUTOMATION",
+      "name": "Workflow Automation Agent",
+      "role": "execute_approved_workflows",
+      "status": "planned",
+      "identity_required": true,
+      "default_scopes": []
+    }
+  ],
+  "rules": [
+    "عامل‌ها مستقل ولی تحت policy مرکزی‌اند.",
+    "هویت و scope هر عامل جداگانه تعریف می‌شود.",
+    "هیچ عامل مجاز به ارتقای دسترسی خود نیست.",
+    "وضعیت planned/design_started به معنی فعال بودن runtime نیست."
+  ]
+}

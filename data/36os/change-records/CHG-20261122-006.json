@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261122-006",
+  "date": "2026-11-22",
+  "actor": {
+    "id": "project-owner-and-assistant",
+    "type": "human_authorized_request_with_ai_implementation"
+  },
+  "summary": "Install append-only database triggers for audit and change ledgers at application startup and test ledger immutability.",
+  "rationale": "Ensure runtime audit and change records cannot be updated or deleted through ordinary application database access on SQLite or PostgreSQL.",
+  "goal_ids": [
+    "G-002",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-003",
+    "D-013"
+  ],
+  "risk": "high",
+  "approval_status": "owner_authorized_for_this_implementation",
+  "touched_files": [
+    "app/database.py",
+    "tests/test_knowledge_api.py"
+  ],
+  "verification": [
+    "GitHub Actions tests pending"
+  ],
+  "notes": "Database owner/superuser can still bypass triggers; production role permissions and managed database audit remain required."
+}

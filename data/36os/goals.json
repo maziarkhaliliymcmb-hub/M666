@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "36OS",
+  "goals": [
+    {
+      "id": "G-001",
+      "title": "ساخت هسته مرکزی CIE",
+      "type": "strategic",
+      "status": "in_progress",
+      "priority": "critical",
+      "description": "ایجاد Core Orchestrator برای مدیریت درخواست‌ها، عامل‌ها، ابزارها، حافظه و چرخه اجرای کار.",
+      "success_criteria": [
+        "ثبت و بازیابی پایدار وضعیت اجرا",
+        "توزیع وظایف به Agentهای مجاز",
+        "کنترل scope و approval قبل از اقدام",
+        "ثبت کامل رویدادهای قابل ممیزی"
+      ],
+      "depends_on": [
+        "G-002",
+        "G-003",
+        "G-004"
+      ]
+    },
+    {
+      "id": "G-002",
+      "title": "پایگاه داده و حافظه مشترک 36OS",
+      "type": "foundational",
+      "status": "in_progress",
+      "priority": "critical",
+      "description": "تبدیل تصمیمات، اهداف، گفتگوها، شواهد، Agentها، اتصال‌ها و رخدادها به داده ساختاریافته، نسخه‌پذیر و قابل استفاده از طریق API.",
+      "success_criteria": [
+        "JSON canonical records",
+        "SQL schema و migration",
+        "API خواندن/نوشتن با کنترل دسترسی",
+        "نسخه‌بندی و audit trail"
+      ]
+    },
+    {
+      "id": "G-003",
+      "title": "هویت و مجوزدهی عامل‌ها و مدل‌ها",
+      "type": "security",
+      "status": "in_progress",
+      "priority": "critical",
+      "description": "فقط مدل‌های تأییدشده هویت معتبر و scope محدود دریافت کنند؛ ناشناخته‌ها به‌صورت پیش‌فرض رد شوند.",
+      "success_criteria": [
+        "مدیریت هویت مجاز",
+        "scope enforcement روی تمام endpointهای محافظت‌شده",
+        "لغو و چرخش credential",
+        "ثبت رویدادهای امنیتی"
+      ]
+    },
+    {
+      "id": "G-004",
+      "title": "Orchestration و همکاری چندعاملی",
+      "type": "capability",
+      "status": "planned",
+      "priority": "high",
+      "description": "اجرای گردش‌کار چندعاملی با تقسیم وظیفه، تبادل شواهد، ارزیابی خروجی و حل تعارض."
+    },
+    {
+      "id": "G-005",
+      "title": "ورودی و خروجی تلگرام",
+      "type": "interface",
+      "status": "planned",
+      "priority": "high",
+      "description": "دریافت ورودی از ربات تلگرام، ارجاع به CIE و بازگرداندن پاسخ؛ در فاز نخست مدیریت ورودی/خروجی توسط ChatGPT تا انتخاب مدل اختصاصی.",
+      "acceptance": [
+        "احراز هویت کاربر",
+        "ثبت پیام و شناسه correlation",
+        "پاسخ به همان گفتگو",
+        "عدم افشای اسرار"
+      ]
+    },
+    {
+      "id": "G-006",
+      "title": "اتصال Activepieces به‌عنوان MCP gateway",
+      "type": "integration",
+      "status": "planned",
+      "priority": "high",
+      "description": "استفاده از Activepieces Cloud برای اجرای workflow و ارائه MCP toolهای محدود و اختصاصی؛ اتصال هر مدل با هویت و credential مستقل."
+    },
+    {
+      "id": "G-007",
+      "title": "مدل اقتصادی و رایگان برای عامل ورودی/خروجی",
+      "type": "model_strategy",
+      "status": "deferred",
+      "priority": "medium",
+      "description": "بررسی مدل متن‌باز/چینی با سهمیه رایگان یا اجرای محلی؛ تا زمان انتخاب و آزمون، شاخه مدل اختصاصی فعال نشود."
+    },
+    {
+      "id": "G-008",
+      "title": "زیرساخت ترکیبی ابری و محلی",
+      "type": "infrastructure",
+      "status": "planned",
+      "priority": "high",
+      "description": "توسعه و آزمایش اولیه با زیرساخت ابری؛ انتقال تدریجی runtime و حافظه به سخت‌افزار مالک، با امکان همکاری cloud/on-prem."
+    },
+    {
+      "id": "G-009",
+      "title": "خودمختاری تطبیقی سطح B",
+      "type": "governance",
+      "status": "approved_architecture",
+      "priority": "critical",
+      "description": "ادامه عملیات کم‌خطر و از پیش مجاز در غیاب مالک؛ پیشنهاد و آزمایش خودکار، اما افزایش اختیار و اقدامات پرریسک فقط با تأیید انسان."
+    },
+    {
+      "id": "G-010",
+      "title": "حفظ و تکامل پیوسته دانش اکوسیستم",
+      "type": "knowledge",
+      "status": "planned",
+      "priority": "high",
+      "description": "ثبت تصمیمات، شواهد، خطاها و درس‌آموخته‌ها و استفاده از آن‌ها برای پیشنهاد بهبودهای بعدی."
+    },
+    {
+      "id": "G-011",
+      "title": "حاکمیت توسعه مبتنی بر دیتابیس و ردیابی جامع تغییرات",
+      "type": "governance",
+      "status": "in_progress",
+      "priority": "critical",
+      "description": "تمام تغییرات کد، داده، معماری، مستندات، تنظیمات و اتصال‌ها باید قبل از ادغام با اهداف و تصمیمات مرجع تطبیق داده شده و در change record نسخه‌پذیر و audit log ثبت شوند.",
+      "success_criteria": [
+        "اعتبارسنجی تغییرات در CI",
+        "هر تغییر مرتبط با هدف و تصمیم مشخص",
+        "ثبت actor و commit و فایل‌های تغییرکرده",
+        "API عملیاتی برای دانش و ممیزی",
+        "عدم پذیرش تغییر فاقد change record در شاخه محافظت‌شده"
+      ]
+    }
+  ]
+}

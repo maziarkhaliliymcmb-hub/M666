@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "36OS",
+  "name": "36OS — Collective Intelligence Operating System",
+  "codename": "CIE",
+  "language": "fa",
+  "status": "architecture_and_bootstrap",
+  "created_context": "2026-11-20",
+  "updated_at": "2026-11-22",
+  "purpose": "ایجاد یک اکوسیستم هوش جمعی متشکل از عامل‌ها و مدل‌های مستقل که از طریق حافظه مشترک، ارکستراسیون، شواهد و خودمختاری تطبیقی همکاری می‌کنند.",
+  "core_principle": "هوش برآمده از همکاری هوش‌های مستقل؛ با حاکمیت انسانی، حداقل دسترسی و قابلیت ممیزی.",
+  "source_of_truth": {
+    "executable_engine": "GitHub repository 36OS-database",
+    "documented_control_plane": "Notion (تصمیم ثبت‌شده در README فعلی مخزن)",
+    "operational_workflows": "Activepieces (تصمیم معماری؛ اتصال زنده هنوز تأیید نشده)",
+    "cloud_runtime": "Vercel/Codespaces در مرحله توسعه و آزمایش؛ استقرار تولیدی تأیید نشده"
+  },
+  "boundaries": {
+    "implemented": [
+      "FastAPI bootstrap",
+      "trusted-model token hash allowlist",
+      "read-only GET /v1/agents/identity",
+      "basic authentication tests",
+      "database-first policy and change-record governance CI (after workflow verification)"
+    ],
+    "not_implemented": [
+      "persistent project database",
+      "agent orchestration",
+      "provider adapters",
+      "Telegram integration",
+      "Activepieces live MCP",
+      "durable audit log",
+      "job queue and workers",
+      "production deployment",
+      "production PostgreSQL provisioning and branch protection ruleset activation"
+    ]
+  },
+  "governance": {
+    "owner_authority": "human_non_delegable",
+    "default_model_access": "deny",
+    "default_tool_access": "deny",
+    "audit": "required",
+    "database_first_development": true,
+    "change_record_required": true,
+    "universal_change_traceability": true,
+    "branch_protection_required": true
+  },
+  "notes": [
+    "این مخزن در حال حاضر زیرساخت آغازین CIE است؛ نباید به‌عنوان اکوسیستم خودمختار عملیاتی معرفی شود.",
+    "اطلاعات گفتگو به‌صورت بازسازی ساختاریافته از زمینه و خلاصه‌های قابل بازیابی ثبت شده است، نه متن کامل و کلمه‌به‌کلمه همه گفتگوها."
+  ]
+}
