@@ -12,3 +12,5 @@ pytest -q
 ```
 
 See `M666_SPEC.md` for the standard.
+
+Change trace: CHG-20261124-M36-001 (canonical record in 36OS-database).

@@ -1,7 +1,10 @@
 {
   "change_id": "CHG-20261124-M36-001",
   "summary": "Implement M666 version 1.0.0 as an isolated, sparse and testable mathematical component of the M36 standard.",
-  "actor": "maziarkhaliliymcmb-hub",
+  "actor": {
+    "id": "maziarkhaliliymcmb-hub",
+    "type": "owner"
+  },
   "goal_ids": [
     "G-002",
     "G-009",
@@ -12,7 +15,9 @@
     "D-013",
     "D-014"
   ],
-  "touched_files": [],
+  "touched_files": [
+    "README.md"
+  ],
   "implementation_files": [
     "pyproject.toml",
     "m666/__init__.py",
@@ -24,5 +29,5 @@
   "risk": "medium",
   "approval_status": "owner_authorized_implementation",
   "canonical_change_record": "36OS-database/data/36os/change-records/CR-20261124-M36-001.json",
-  "note": "This local governance record is added in its own commit; implementation_files lists the files delivered in preceding commits. No runtime database integration or production deployment is included."
+  "note": "This governance record and README trace were committed atomically. implementation_files lists the component files delivered in preceding commits. No runtime database integration or production deployment is included."
 }
