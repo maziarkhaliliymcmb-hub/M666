@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261126-001",
+  "date": "2026-11-26",
+  "actor": {
+    "id": "chatgpt",
+    "type": "assistant"
+  },
+  "summary": "Declare explicit setuptools package discovery for M666 and require wheel construction in CI.",
+  "rationale": "M666 contains multiple top-level Python packages in a flat repository layout. Explicitly listing the intended app and M666 packages avoids ambiguous setuptools auto-discovery and makes wheel packaging a CI acceptance check.",
+  "goal_ids": [
+    "G-002",
+    "G-009",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-013",
+    "D-014"
+  ],
+  "risk": "medium",
+  "approval_status": "owner_authorized_preview_implementation",
+  "touched_files": [
+    "pyproject.toml",
+    ".github/workflows/tests.yml"
+  ],
+  "verification": [
+    "Python tests and wheel build pending in GitHub Actions.",
+    "No production deployment performed."
+  ]
+}
