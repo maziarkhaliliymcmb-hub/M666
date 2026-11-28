@@ -14,6 +14,7 @@ from .matrix import GENE_COUNT, SLOT_COUNT, M666Matrix, Relation, RelationType
 
 M36_STANDARD = "M36"
 M36_ROOT_ID = "M36-ROOT"
+M36_ROOT_SCHEMA_VERSION = "1.0.0"
 M666_STANDARD = "M666"
 M666_VERSION = "1.0.0"
 M1296_STANDARD = "M1296"
@@ -40,6 +41,7 @@ class M36GeneIndex:
     """Immutable 0-based index derived from the ordered M36 root genome."""
 
     genome_id: str
+    root_schema_version: str
     genome_version: str
     gene_ids: tuple[str, ...]
 
@@ -56,6 +58,11 @@ class M36GeneIndex:
             raise ContractError("embedded genome standard must be M36")
         if genome.get("genome_id") != M36_ROOT_ID:
             raise ContractError("M36 root genome_id must be M36-ROOT")
+        root_schema_version = genome.get("standard_version")
+        if root_schema_version != M36_ROOT_SCHEMA_VERSION:
+            raise ContractError(
+                f"unsupported or missing M36 root schema standard_version: {root_schema_version!r}"
+            )
         if response.get("root_protected") is not True:
             raise ContractError("M36 root response must confirm root_protected=true")
         governance = genome.get("governance")
@@ -105,6 +112,7 @@ class M36GeneIndex:
             raise ContractError("M36 gene identifiers must be unique")
         return cls(
             genome_id=M36_ROOT_ID,
+            root_schema_version=root_schema_version,
             genome_version=genome_version,
             gene_ids=tuple(gene_ids),
         )
@@ -214,6 +222,11 @@ def validate_m1296_registry(response: Mapping[str, Any], gene_index: M36GeneInde
         raise ContractError("companion registry standard must be M1296")
     if response.get("version") != M1296_VERSION:
         raise ContractError("unsupported M1296 registry version")
+    root_schema_version = response.get("root_schema_version")
+    if not isinstance(root_schema_version, str) or not root_schema_version:
+        raise ContractError("M1296 root_schema_version is required")
+    if root_schema_version != gene_index.root_schema_version:
+        raise ContractError("M1296 registry must pin the exact M36 root schema standard_version")
     root_genome_version = response.get("root_genome_version")
     if not isinstance(root_genome_version, str) or not root_genome_version:
         raise ContractError("M1296 root_genome_version is required")
