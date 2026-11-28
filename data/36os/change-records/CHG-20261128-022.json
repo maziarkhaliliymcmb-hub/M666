@@ -16,8 +16,7 @@
   "decision_ids": [
     "D-003",
     "D-013",
-    "D-014",
-    "D-015"
+    "D-014"
   ],
   "risk": "medium",
   "approval_status": "owner_authorized_implementation",
