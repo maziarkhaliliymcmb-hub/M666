@@ -23,7 +23,13 @@ def _require_index(value: int, field: str) -> None:
 
 
 def _require_finite_number(value: float, field: str, lower: float, upper: float) -> None:
-    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError(f"{field} must be a finite number")
+    try:
+        finite = math.isfinite(value)
+    except OverflowError:
+        finite = False
+    if not finite:
         raise ValueError(f"{field} must be a finite number")
     if not lower <= value <= upper:
         raise ValueError(f"{field} must be between {lower} and {upper}")
