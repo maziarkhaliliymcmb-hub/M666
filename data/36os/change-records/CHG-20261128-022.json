@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261128-022",
+  "date": "2026-11-28",
+  "actor": {
+    "id": "chatgpt",
+    "type": "assistant"
+  },
+  "summary": "Add pinned shared M36/M666/M1296 interoperability fixture and repository-local conformance tests.",
+  "rationale": "Pin one immutable cross-repository conformance fixture to the M36 Root blob and enforce exact independent root schema/content version propagation through consumer and runtime registry envelopes.",
+  "goal_ids": [
+    "G-002",
+    "G-009",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-003",
+    "D-013",
+    "D-014"
+  ],
+  "risk": "medium",
+  "approval_status": "owner_authorized_implementation",
+  "touched_files": [
+    "tests/fixtures/core-interoperability-v1.1.0.json",
+    "scripts/validate_interop_fixture.py",
+    "tests/test_shared_interop_fixture.py",
+    ".github/workflows/tests.yml"
+  ],
+  "verification": [
+    "A shared fixture records the canonical M36 Root blob SHA and both M36 version domains.",
+    "CI validates the fixture structure before running the repository test suite.",
+    "M666 and M1296 registry envelopes carry exact root_schema_version and root_genome_version values.",
+    "No Root Genome mutation, package release, credential change, or Production deployment is included."
+  ]
+}
