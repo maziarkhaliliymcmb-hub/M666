@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261128-018",
+  "date": "2026-11-28",
+  "actor": {
+    "id": "chatgpt",
+    "type": "assistant"
+  },
+  "summary": "Enforce M36 Root schema version in M666 and require M1296 envelopes to pin schema and content versions.",
+  "rationale": "M666 derives its 0-based gene address space from M36. It must reject unsupported M36 schemas and ensure M1296 references the exact schema and content identity used for the index.",
+  "goal_ids": [
+    "G-002",
+    "G-009",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-003",
+    "D-013",
+    "D-014",
+    "D-016"
+  ],
+  "risk": "medium",
+  "approval_status": "owner_approved_schema_enforcement_implementation",
+  "touched_files": [
+    "m666/contracts.py",
+    "tests/test_contracts.py"
+  ],
+  "verification": [
+    "Reject missing or unsupported M36 standard_version.",
+    "Expose root_schema_version separately in M36GeneIndex.",
+    "Reject missing or mismatched M1296 root_schema_version and root_genome_version.",
+    "Run M666 tests and package build."
+  ],
+  "notes": "Pins core interoperability contract 1.1.0. No Root Genome mutation or graph runtime change."
+}
