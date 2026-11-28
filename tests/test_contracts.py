@@ -90,6 +90,23 @@ def test_m666_registry_contract_and_sparse_semantics():
     assert snapshot.relations[0].gene_a == 0
 
 
+def test_m666_registry_rejects_boolean_indices_and_non_numeric_weights():
+    with pytest.raises(ContractError):
+        parse_m666_registry({
+            "standard": "M666",
+            "version": "1.0.0",
+            "capacity": 666,
+            "active_count": 1,
+            "relations": [{
+                "gene_a": True,
+                "gene_b": 2,
+                "relation_type": "synergy",
+                "weight": 0.7,
+                "confidence": 0.9,
+            }],
+        })
+
+
 def test_m666_registry_rejects_noncanonical_duplicate_and_count_mismatch():
     base = {
         "standard": "M666",
@@ -137,6 +154,16 @@ def test_m1296_contract_shares_m36_address_space_but_keeps_direction():
     }
     validate_m1296_registry(response, index)
     response["node_count"] = 35
+    with pytest.raises(ContractError):
+        validate_m1296_registry(response, index)
+
+    response["node_count"] = 36
+    response["active_count"] = 1
+    with pytest.raises(ContractError):
+        validate_m1296_registry(response, index)
+
+    response["active_count"] = 2
+    response["edges"].append(dict(response["edges"][0]))
     with pytest.raises(ContractError):
         validate_m1296_registry(response, index)
 
