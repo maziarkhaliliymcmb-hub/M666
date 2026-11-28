@@ -29,6 +29,7 @@ M666 and M1296 currently expose numeric indices, not stable gene IDs, in their r
 - `(a,b)` and `(b,a)` resolve to one M666 slot.
 - Diagonal pairs `(i,i)` represent self-relations.
 - Registry storage is sparse. Capacity 666 does not mean 666 rows exist.
+- In the current 36OS M666 response, the legacy field `active_count` is the number of returned relation records; it is not a status-filtered count. The endpoint returns all stored relations.
 - `relation_type`: `synergy | dependency | conflict | inhibition | regulation | complementarity | neutral`.
 - `weight`: numeric in [-1, 1].
 - `confidence`: numeric in [0, 1].
