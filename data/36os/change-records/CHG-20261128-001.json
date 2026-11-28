@@ -31,5 +31,6 @@
     "GitHub Actions test suite and wheel build are required before merge.",
     "No database migration, credential change, production deployment or runtime mutation was performed."
   ],
-  "notes": "This contract mirrors the current 36OS runtime routes and proposal lifecycle. Live authenticated Preview integration and database persistence remain unverified. Canonical change identifier allocated after checking the 36OS database change-record ledger."
+  "notes": "This contract mirrors the current 36OS runtime routes and proposal lifecycle. Live authenticated Preview integration and database persistence remain unverified. Canonical change identifier allocated after checking the 36OS database change-record ledger.",
+  "canonical_change_record": "36OS-database/data/36os/change-records/CHG-20261128-007.json"
 }
