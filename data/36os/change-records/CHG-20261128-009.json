@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261128-009",
+  "date": "2026-11-28",
+  "actor": {
+    "id": "chatgpt",
+    "type": "assistant"
+  },
+  "summary": "Enforce exact integer contracts and deterministic M1296 traversal across the four-repository runtime.",
+  "rationale": "Interoperability validators must not accept floating-point values that compare equal to integers, and graph impact results must be deterministic independent of edge insertion order.",
+  "goal_ids": [
+    "G-002",
+    "G-009",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-003",
+    "D-013",
+    "D-014"
+  ],
+  "risk": "medium",
+  "approval_status": "owner_authorized_implementation",
+  "touched_files": [
+    "m666/contracts.py",
+    "tests/test_contracts.py"
+  ],
+  "verification": [
+    "Add regression tests for float-valued M36 dimensions and counts, M666/M1296 capacity fields, and deterministic graph traversal.",
+    "Run Python tests, package builds and database governance checks before merge.",
+    "No database migration, credential change or production deployment."
+  ],
+  "notes": "Local traceability copy; canonical record maintained in 36OS-database."
+}

@@ -220,3 +220,44 @@ def test_proposal_builder_rejects_invalid_envelope():
             "This rationale is long enough for validation.",
             change_level="L5",
         )
+
+def test_contracts_reject_float_valued_counts_and_indices():
+    response = root_response()
+    response["gene_count"] = 36.0
+    with pytest.raises(ContractError):
+        M36GeneIndex.from_root_response(response)
+
+    response = root_response()
+    response["genome"]["structure"]["chromosomes"] = 6.0
+    with pytest.raises(ContractError):
+        M36GeneIndex.from_root_response(response)
+
+    response = root_response()
+    response["genome"]["chromosomes"][0]["index"] = 1.0
+    with pytest.raises(ContractError):
+        M36GeneIndex.from_root_response(response)
+
+    m666 = {
+        "standard": "M666", "version": "1.0.0", "capacity": 666.0,
+        "active_count": 0, "relations": [],
+    }
+    with pytest.raises(ContractError):
+        parse_m666_registry(m666)
+
+    m666["capacity"] = 666
+    m666["active_count"] = 0.0
+    with pytest.raises(ContractError):
+        parse_m666_registry(m666)
+
+    index = M36GeneIndex.from_root_response(root_response())
+    m1296 = {
+        "standard": "M1296", "version": "1.0.0", "node_count": 36.0,
+        "capacity": 1296, "active_count": 0, "edges": [],
+    }
+    with pytest.raises(ContractError):
+        validate_m1296_registry(m1296, index)
+
+    m1296["node_count"] = 36
+    m1296["capacity"] = 1296.0
+    with pytest.raises(ContractError):
+        validate_m1296_registry(m1296, index)

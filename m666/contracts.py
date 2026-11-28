@@ -47,7 +47,7 @@ class M36GeneIndex:
     def from_root_response(cls, response: Mapping[str, Any]) -> "M36GeneIndex":
         if response.get("standard") != M36_STANDARD:
             raise ContractError("root response standard must be M36")
-        if response.get("gene_count") != GENE_COUNT:
+        if type(response.get("gene_count")) is not int or response.get("gene_count") != GENE_COUNT:
             raise ContractError("M36 root must expose exactly 36 genes")
         genome = response.get("genome")
         if not isinstance(genome, Mapping):
@@ -67,20 +67,29 @@ class M36GeneIndex:
         if not isinstance(genome_version, str) or not genome_version:
             raise ContractError("M36 genome_version is required")
         structure = genome.get("structure")
-        if structure != {
+        expected_structure = {
             "chromosomes": 6,
             "genes_per_chromosome": 6,
             "total_genes": GENE_COUNT,
-        }:
-            raise ContractError("M36 structure must be exactly 6x6=36")
+        }
+        if (
+            not isinstance(structure, Mapping)
+            or any(type(structure.get(key)) is not int for key in expected_structure)
+            or structure != expected_structure
+        ):
+            raise ContractError("M36 structure must be exactly 6x6=36 with integer dimensions")
         chromosomes = genome.get("chromosomes")
         if not isinstance(chromosomes, list) or len(chromosomes) != 6:
             raise ContractError("M36 must contain six ordered chromosomes")
 
         gene_ids: list[str] = []
         for chromosome_index, chromosome in enumerate(chromosomes, start=1):
-            if not isinstance(chromosome, Mapping) or chromosome.get("index") != chromosome_index:
-                raise ContractError("M36 chromosome order must be 1..6")
+            if (
+                not isinstance(chromosome, Mapping)
+                or type(chromosome.get("index")) is not int
+                or chromosome.get("index") != chromosome_index
+            ):
+                raise ContractError("M36 chromosome indices must be integers ordered 1..6")
             genes = chromosome.get("genes")
             if not isinstance(genes, list) or len(genes) != 6:
                 raise ContractError("each M36 chromosome must contain six genes")
@@ -149,8 +158,8 @@ def parse_m666_registry(response: Mapping[str, Any]) -> M666RegistrySnapshot:
     version = response.get("version")
     if version != M666_VERSION:
         raise ContractError(f"unsupported M666 registry version: {version!r}")
-    if response.get("capacity") != SLOT_COUNT:
-        raise ContractError("M666 capacity must be 666")
+    if type(response.get("capacity")) is not int or response.get("capacity") != SLOT_COUNT:
+        raise ContractError("M666 capacity must be integer 666")
     raw_relations = response.get("relations")
     if not isinstance(raw_relations, list):
         raise ContractError("M666 relations must be an array")
@@ -190,8 +199,8 @@ def parse_m666_registry(response: Mapping[str, Any]) -> M666RegistrySnapshot:
 
     matrix.validate()
     active_count = response.get("active_count")
-    if isinstance(active_count, bool) or active_count != len(raw_relations):
-        raise ContractError("active_count must equal the number of returned relations")
+    if type(active_count) is not int or active_count != len(raw_relations):
+        raise ContractError("active_count must be an integer equal to the number of returned relations")
     return M666RegistrySnapshot(
         version=version,
         capacity=SLOT_COUNT,
@@ -205,10 +214,10 @@ def validate_m1296_registry(response: Mapping[str, Any], gene_index: M36GeneInde
         raise ContractError("companion registry standard must be M1296")
     if response.get("version") != M1296_VERSION:
         raise ContractError("unsupported M1296 registry version")
-    if response.get("node_count") != len(gene_index.gene_ids):
-        raise ContractError("M1296 node_count must match the M36 gene count")
-    if response.get("capacity") != M1296_CAPACITY:
-        raise ContractError("M1296 capacity must be 1296")
+    if type(response.get("node_count")) is not int or response.get("node_count") != len(gene_index.gene_ids):
+        raise ContractError("M1296 node_count must be an integer matching the M36 gene count")
+    if type(response.get("capacity")) is not int or response.get("capacity") != M1296_CAPACITY:
+        raise ContractError("M1296 capacity must be integer 1296")
     edges = response.get("edges")
     if not isinstance(edges, list):
         raise ContractError("M1296 edges must be an array")
