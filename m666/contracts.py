@@ -202,16 +202,23 @@ def validate_m1296_registry(response: Mapping[str, Any], gene_index: M36GeneInde
     active_count = response.get("active_count")
     if isinstance(active_count, bool) or not isinstance(active_count, int) or not 0 <= active_count <= len(edges):
         raise ContractError("M1296 active_count is invalid")
+    seen_slots: set[tuple[int, int]] = set()
+    observed_active = 0
     for edge in edges:
         if not isinstance(edge, Mapping):
             raise ContractError("M1296 edge entries must be objects")
         source, target = edge.get("source"), edge.get("target")
         if any(isinstance(x, bool) or not isinstance(x, int) or not 0 <= x < GENE_COUNT for x in (source, target)):
             raise ContractError("M1296 source and target must be M36 indices in [0, 35]")
+        if (source, target) in seen_slots:
+            raise ContractError("duplicate directed M1296 edge slot")
+        seen_slots.add((source, target))
         if edge.get("edge_type") not in M1296_EDGE_TYPES:
             raise ContractError("unsupported M1296 edge_type")
-        if "active" in edge and not isinstance(edge["active"], bool):
+        active = edge.get("active", True)
+        if not isinstance(active, bool):
             raise ContractError("M1296 active must be boolean")
+        observed_active += int(active)
         for field in ("weight", "confidence"):
             value = edge.get(field, 1.0)
             if isinstance(value, bool) or not isinstance(value, (int, float)):
@@ -220,6 +227,8 @@ def validate_m1296_registry(response: Mapping[str, Any], gene_index: M36GeneInde
                 raise ContractError("M1296 weight must be in [-1, 1]")
             if field == "confidence" and not 0.0 <= value <= 1.0:
                 raise ContractError("M1296 confidence must be in [0, 1]")
+    if active_count != observed_active:
+        raise ContractError("M1296 active_count must equal the number of active edges")
 
 
 def build_m666_proposal(
