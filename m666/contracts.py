@@ -214,6 +214,11 @@ def validate_m1296_registry(response: Mapping[str, Any], gene_index: M36GeneInde
         raise ContractError("companion registry standard must be M1296")
     if response.get("version") != M1296_VERSION:
         raise ContractError("unsupported M1296 registry version")
+    root_genome_version = response.get("root_genome_version")
+    if not isinstance(root_genome_version, str) or not root_genome_version:
+        raise ContractError("M1296 root_genome_version is required")
+    if root_genome_version != gene_index.genome_version:
+        raise ContractError("M1296 registry must pin the exact M36 root genome_version")
     if type(response.get("node_count")) is not int or response.get("node_count") != len(gene_index.gene_ids):
         raise ContractError("M1296 node_count must be an integer matching the M36 gene count")
     if type(response.get("capacity")) is not int or response.get("capacity") != M1296_CAPACITY:
