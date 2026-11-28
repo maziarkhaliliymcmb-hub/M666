@@ -148,6 +148,14 @@ def parse_m666_registry(response: Mapping[str, Any]) -> M666RegistrySnapshot:
         if not isinstance(raw, Mapping):
             raise ContractError("M666 relation entries must be objects")
         try:
+            for field in ("gene_a", "gene_b"):
+                if isinstance(raw[field], bool) or not isinstance(raw[field], int):
+                    raise ContractError(f"{field} must be an integer M36 index")
+            for field in ("weight", "confidence"):
+                if isinstance(raw[field], bool) or not isinstance(raw[field], (int, float)):
+                    raise ContractError(f"{field} must be numeric")
+            if not isinstance(raw.get("status", "active"), str) or not raw.get("status", "active"):
+                raise ContractError("status must be a non-empty string")
             relation = Relation(
                 gene_a=raw["gene_a"],
                 gene_b=raw["gene_b"],
@@ -202,6 +210,8 @@ def validate_m1296_registry(response: Mapping[str, Any], gene_index: M36GeneInde
             raise ContractError("M1296 source and target must be M36 indices in [0, 35]")
         if edge.get("edge_type") not in M1296_EDGE_TYPES:
             raise ContractError("unsupported M1296 edge_type")
+        if "active" in edge and not isinstance(edge["active"], bool):
+            raise ContractError("M1296 active must be boolean")
         for field in ("weight", "confidence"):
             value = edge.get(field, 1.0)
             if isinstance(value, bool) or not isinstance(value, (int, float)):
@@ -226,6 +236,8 @@ def build_m666_proposal(
         raise ContractError("rationale must contain 20..8000 characters")
     if change_level not in {"L1", "L2", "L3"}:
         raise ContractError("change_level must be L1, L2 or L3")
+    if isinstance(evidence_refs, (str, bytes)) or not isinstance(evidence_refs, Sequence):
+        raise ContractError("evidence_refs must be a sequence of strings")
     if len(evidence_refs) > 50 or any(not isinstance(ref, str) or not ref for ref in evidence_refs):
         raise ContractError("evidence_refs must contain at most 50 non-empty strings")
     return {
