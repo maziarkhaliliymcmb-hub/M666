@@ -2,6 +2,7 @@ import pytest
 
 from m666.contracts import (
     ContractError,
+    CORE_INTEROPERABILITY_CONTRACT_VERSION,
     M36GeneIndex,
     build_m666_proposal,
     parse_m666_registry,
@@ -288,3 +289,8 @@ def test_m36_index_rejects_missing_or_unsupported_root_schema_version(bad_schema
         response["genome"]["standard_version"] = bad_schema_version
     with pytest.raises(ContractError, match="root schema"):
         M36GeneIndex.from_root_response(response)
+
+
+
+def test_m666_uses_core_interoperability_contract_1_1_0():
+    assert CORE_INTEROPERABILITY_CONTRACT_VERSION == "1.1.0"
