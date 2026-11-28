@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261128-008",
+  "date": "2026-11-28",
+  "actor": {
+    "id": "chatgpt",
+    "type": "assistant"
+  },
+  "summary": "Harden M36, M666 and M1296 domain validation against malformed types and boolean numeric coercion.",
+  "rationale": "All four repositories must reject malformed genome structures, bool-as-int identifiers, non-finite numeric values and invalid relation/edge metadata consistently before data reaches shared genome APIs.",
+  "goal_ids": [
+    "G-002",
+    "G-009",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-003",
+    "D-013",
+    "D-014"
+  ],
+  "risk": "medium",
+  "approval_status": "owner_authorized_implementation",
+  "touched_files": [
+    "m666/matrix.py",
+    "tests/test_matrix.py"
+  ],
+  "verification": [
+    "Add negative tests for boolean indices and numeric values, malformed M36 objects, invalid enum metadata and graph traversal depth.",
+    "Run Python tests, package builds and 36OS database governance checks in CI before merge.",
+    "No database migration, credential change or production deployment."
+  ],
+  "notes": "Local traceability copy; canonical record is maintained in 36OS-database."
+}
