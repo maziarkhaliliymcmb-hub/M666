@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261128-001",
+  "date": "2026-11-28",
+  "actor": {
+    "id": "chatgpt",
+    "type": "assistant"
+  },
+  "summary": "Implement the versioned M36-M666-M1296 interoperability contract and 36OS proposal API client validators.",
+  "rationale": "M666 and M1296 share one ordered M36 gene universe but have different mathematical semantics. The contract pins stable gene identifiers to numeric indices, validates both registry payloads, and submits M666 changes only through the authenticated 36OS proposal API without direct database access or implicit directed-edge creation.",
+  "goal_ids": ["G-002", "G-009", "G-011"],
+  "decision_ids": ["D-003", "D-013", "D-014"],
+  "risk": "medium",
+  "approval_status": "owner_authorized_implementation",
+  "touched_files": [
+    "m666/contracts.py",
+    "docs/integration-contract.md",
+    "schemas/m666-runtime-contract.schema.json",
+    "tests/test_contracts.py"
+  ],
+  "verification": [
+    "Added unit tests for M36 stable gene indexing, M666 canonical sparse records, M1296 shared address-space validation and 36OS proposal envelopes.",
+    "GitHub Actions test suite and wheel build are required before merge.",
+    "No database migration, credential change, production deployment or runtime mutation was performed."
+  ],
+  "notes": "This contract mirrors the current 36OS runtime routes and proposal lifecycle. Live authenticated Preview integration and database persistence remain unverified."
+}
