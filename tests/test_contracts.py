@@ -153,6 +153,7 @@ def test_m1296_contract_shares_m36_address_space_but_keeps_direction():
     response = {
         "standard": "M1296",
         "version": "1.0.0",
+        "root_genome_version": index.genome_version,
         "node_count": 36,
         "capacity": 1296,
         "active_count": 2,
@@ -163,6 +164,10 @@ def test_m1296_contract_shares_m36_address_space_but_keeps_direction():
         "cyclic_components": [],
     }
     validate_m1296_registry(response, index)
+    response["root_genome_version"] = "0.9.0"
+    with pytest.raises(ContractError):
+        validate_m1296_registry(response, index)
+    response["root_genome_version"] = index.genome_version
     response["node_count"] = 35
     with pytest.raises(ContractError):
         validate_m1296_registry(response, index)
