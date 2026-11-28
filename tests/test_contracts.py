@@ -23,10 +23,15 @@ def root_response():
     return {
         "standard": "M36",
         "gene_count": 36,
+        "root_protected": True,
         "genome": {
             "standard": "M36",
             "genome_id": "M36-ROOT",
             "genome_version": "1.0.0",
+            "governance": {
+                "root_protected": True,
+                "root_modification": "approval_required",
+            },
             "structure": {
                 "chromosomes": 6,
                 "genes_per_chromosome": 6,
@@ -54,6 +59,11 @@ def test_m36_index_rejects_bad_root_or_gene_order():
 
     response = root_response()
     response["genome"]["chromosomes"][0]["genes"][0]["id"] = "unstable-id"
+    with pytest.raises(ContractError):
+        M36GeneIndex.from_root_response(response)
+
+    response = root_response()
+    response["root_protected"] = False
     with pytest.raises(ContractError):
         M36GeneIndex.from_root_response(response)
 
