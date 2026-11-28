@@ -2,6 +2,7 @@ import pytest
 
 from m666.contracts import (
     ContractError,
+    CORE_INTEROPERABILITY_CONTRACT_VERSION,
     M36GeneIndex,
     build_m666_proposal,
     parse_m666_registry,
@@ -27,6 +28,7 @@ def root_response():
         "genome": {
             "standard": "M36",
             "genome_id": "M36-ROOT",
+            "standard_version": "1.0.0",
             "genome_version": "1.0.0",
             "governance": {
                 "root_protected": True,
@@ -48,6 +50,7 @@ def test_m36_index_is_stable_and_zero_based():
     assert index.gene_id_at(35) == "M36-CHR06-G06"
     assert index.index_of("M36-CHR02-G01") == 6
     assert index.genome_id == "M36-ROOT"
+    assert index.root_schema_version == "1.0.0"
     assert index.genome_version == "1.0.0"
 
 
@@ -153,6 +156,7 @@ def test_m1296_contract_shares_m36_address_space_but_keeps_direction():
     response = {
         "standard": "M1296",
         "version": "1.0.0",
+        "root_schema_version": index.root_schema_version,
         "root_genome_version": index.genome_version,
         "node_count": 36,
         "capacity": 1296,
@@ -164,6 +168,13 @@ def test_m1296_contract_shares_m36_address_space_but_keeps_direction():
         "cyclic_components": [],
     }
     validate_m1296_registry(response, index)
+    response.pop("root_schema_version")
+    with pytest.raises(ContractError):
+        validate_m1296_registry(response, index)
+    response["root_schema_version"] = "2.0.0"
+    with pytest.raises(ContractError):
+        validate_m1296_registry(response, index)
+    response["root_schema_version"] = index.root_schema_version
     response["root_genome_version"] = "0.9.0"
     with pytest.raises(ContractError):
         validate_m1296_registry(response, index)
@@ -266,3 +277,20 @@ def test_contracts_reject_float_valued_counts_and_indices():
     m1296["capacity"] = 1296.0
     with pytest.raises(ContractError):
         validate_m1296_registry(m1296, index)
+
+
+
+@pytest.mark.parametrize("bad_schema_version", [None, "", "2.0.0", "not-semver"])
+def test_m36_index_rejects_missing_or_unsupported_root_schema_version(bad_schema_version):
+    response = root_response()
+    if bad_schema_version is None:
+        response["genome"].pop("standard_version")
+    else:
+        response["genome"]["standard_version"] = bad_schema_version
+    with pytest.raises(ContractError, match="root schema"):
+        M36GeneIndex.from_root_response(response)
+
+
+
+def test_m666_uses_core_interoperability_contract_1_1_0():
+    assert CORE_INTEROPERABILITY_CONTRACT_VERSION == "1.1.0"
