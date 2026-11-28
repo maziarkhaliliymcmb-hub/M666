@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "change_id": "CHG-20261128-012",
+  "date": "2026-11-28",
+  "actor": {
+    "id": "chatgpt",
+    "type": "assistant"
+  },
+  "summary": "Require M1296 registry payloads to pin the exact M36 root content version consumed by M666.",
+  "rationale": "A shared 36-node address space is not sufficient to establish lineage; M1296 data must identify the exact M36 root content version used to assign its node indices.",
+  "goal_ids": [
+    "G-002",
+    "G-009",
+    "G-011"
+  ],
+  "decision_ids": [
+    "D-003",
+    "D-013",
+    "D-014"
+  ],
+  "risk": "medium",
+  "approval_status": "owner_authorized_implementation",
+  "touched_files": [
+    "m666/contracts.py",
+    "tests/test_contracts.py"
+  ],
+  "verification": [
+    "Validate M1296 root_genome_version is required and equals M36GeneIndex.genome_version.",
+    "Reject a mismatched root content version.",
+    "Run M666 test suite and package build.",
+    "No Root Genome mutation or runtime deployment."
+  ],
+  "notes": "Canonical governance record to be mirrored in 36OS-database."
+}
