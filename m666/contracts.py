@@ -56,6 +56,13 @@ class M36GeneIndex:
             raise ContractError("embedded genome standard must be M36")
         if genome.get("genome_id") != M36_ROOT_ID:
             raise ContractError("M36 root genome_id must be M36-ROOT")
+        if response.get("root_protected") is not True:
+            raise ContractError("M36 root response must confirm root_protected=true")
+        governance = genome.get("governance")
+        if not isinstance(governance, Mapping) or governance.get("root_protected") is not True:
+            raise ContractError("M36 root genome must be constitutionally protected")
+        if governance.get("root_modification") != "approval_required":
+            raise ContractError("M36 root mutation must require approval")
         genome_version = genome.get("genome_version")
         if not isinstance(genome_version, str) or not genome_version:
             raise ContractError("M36 genome_version is required")
@@ -115,6 +122,12 @@ class M36GeneIndex:
     ) -> Relation:
         """Create a canonical M666 relation from stable M36 gene identifiers."""
         a, b = sorted((self.index_of(gene_a_id), self.index_of(gene_b_id)))
+        if isinstance(weight, bool) or not isinstance(weight, (int, float)):
+            raise ContractError("weight must be numeric")
+        if isinstance(confidence, bool) or not isinstance(confidence, (int, float)):
+            raise ContractError("confidence must be numeric")
+        if not isinstance(status, str) or not status:
+            raise ContractError("status must be a non-empty string")
         try:
             kind = relation_type if isinstance(relation_type, RelationType) else RelationType(relation_type)
             return Relation(a, b, kind, weight, confidence, status)
@@ -243,7 +256,7 @@ def build_m666_proposal(
         raise ContractError("proposal_id must match GP-YYYYMMDD-NNN")
     if not isinstance(rationale, str) or len(rationale) < 20 or len(rationale) > 8000:
         raise ContractError("rationale must contain 20..8000 characters")
-    if change_level not in {"L1", "L2", "L3"}:
+    if not isinstance(change_level, str) or change_level not in {"L1", "L2", "L3"}:
         raise ContractError("change_level must be L1, L2 or L3")
     if isinstance(evidence_refs, (str, bytes)) or not isinstance(evidence_refs, Sequence):
         raise ContractError("evidence_refs must be a sequence of strings")
